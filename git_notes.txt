@@ -1,152 +1,193 @@
+###Version Control System (VCS) & Git Fundamentals
 
+##VCS Core Concepts
 
-VERSION CONTROL SYSTEM (VCS)
-----------------------------
-- A repository is like a database that stores files and tracks changes.
-- You can view history (who made changes, when).
-- You can revert to earlier versions.
-- Makes it easy to track versions and work together.
+This section covers the basics of a Version Control System.
 
-TYPES OF VCS
-------------
-1. Centralized:
-   - Shared repository (single server).
-   - Problem: Single point of failure if server goes down.
+    A repository is like a database that stores files and tracks changes.
 
-2. Distributed:
-   - Each user has a full copy of the project locally.
-   - Work offline, then sync with others.
-   - No single point of failure.
+    You can view history (who made changes, when).
 
-WHY GIT
--------
-- Free & Open Source
-- Super fast & scalable
-- Widely used, important for jobs
-- Makes collaboration and history tracking easy
+    You can revert to earlier versions.
 
-USING GIT
----------
-- Command Line (CLI) → Best and always available
-- IDEs (like VS Code) → Built-in Git support
-- Extensions: GitLens for VS Code
-- GUIs:
-  - GitKraken (Windows/Linux/Mac)
-  - SourceTree (Windows/Mac only)
-- Tip: Use CLI mainly, GUI when needed for speed
+    VCS makes it easy to track versions and work together.
 
-INSTALLING GIT
---------------
-- Check version: git --version
-- On Windows: Git Bash is preferred over default CMD
+##Types of VCS
 
-CONFIGURING GIT
----------------
-3 Levels of config:
-1. System - All users
-2. Global - All repos of current user
-3. Local - Only current repo
+###Centralized (CVCS)
 
-Set username and email:
-==git config --global user.name "yourname"==
-==git config --global user.email "youremail@example.com"==
+    Shared repository on a single server.
 
-Set default editor (example VS Code):
-==git config --global core.editor "code --wait"==
+    Problem: ~~Single point of failure~~ if the server goes down.
 
-Edit global settings:
-==git config --global -e==
+###Distributed (DVCS)
 
-Handling End of Line (EOL):
-Windows uses \r\n
-Mac/Linux uses \n
-==git config --global core.autocrlf true     (Windows)==
-==git config --global core.autocrlf input    (Mac/Linux)==
+    Each user has a full copy of the project locally.
 
-GETTING HELP
-------------
-==git config --help==
-==git config -h==
+    Work offline, then sync with others.
 
-INITIALIZING A REPO
--------------------
+    No single point of failure.
+
+##Why Git?
+
+Git is the most widely used Distributed VCS.
+
+    Free & Open Source
+
+    Super fast & scalable
+
+    Widely used, important for jobs
+
+    Makes collaboration and history tracking easy
+
+##Using Git
+
+Ways to interact with Git:
+
+    Command Line (CLI) → Best and always available
+
+    IDEs (like VS Code) → Built-in Git support
+
+    Extensions: GitLens for VS Code
+
+    GUIs: GitKraken, SourceTree
+
+    Tip: Use CLI mainly, GUI when needed for speed
+
+##Installing & Configuring Git
+
+###Installation
+
+    Check version: git --version
+
+    On Windows: Git Bash is preferred over default CMD
+
+###Configuration Levels
+
+    System - All users
+
+    Global - All repos of current user
+
+    Local - Only current repo
+
+###Setting User Identity
+
+Bash
+
+# Set username and email globally
+git config --global user.name "Your Name"
+git config --global user.email "youremail@example.com"
+
+Handling End of Line (EOL)
+
+Windows uses \r\n; Mac/Linux uses \n.
+Bash
+
+# For Windows:
+git config --global core.autocrlf true
+
+# For Mac/Linux:
+git config --global core.autocrlf input
+
+Getting Help
+
+Bash
+
+git config --help
+# Or
+git config -h
+
+##Basic Git Workflow
+
+###Initializing a Repo
+
+Bash
+
 git init
-(Creates .git hidden folder with config, objects, refs etc.)
-WARNING: Deleting .git removes history!
+# Creates .git hidden folder
+# WARNING: Deleting .git removes history!
 
-BASIC GIT WORKFLOW
-------------------
+The Three States
+
 Local Project → Staging Area → Repository
 
-- Staging = Prepare and review changes
-- Commit = Save snapshot to repository
+    Staging = Prepare and review changes
 
-EXAMPLES
---------
-Add and commit:
-==git add file1 file2==
-==git commit -m "Meaningful message"==
+    Commit = Save snapshot to repository
 
-Remove if deleted locally:
-==git add file2==
-==git commit -m "Removed unused code"==
+###Staging and Committing
 
-COMMITS
--------
-Each commit has:
-- ID
-- Message
-- Author
-- Date/Time
-- Snapshot
-(Note: Git compresses and avoids duplicate storage)
+Bash
 
-TRACKING FILES
---------------
-==echo hello1 > file1.txt==
-==echo world >> file2.txt==
+# Add file(s) to the staging area
+git add file1 file2
+
+# Commit the staged changes
+git commit -m "Meaningful message"
+
+###Tracking Files
 
 Symbols in git status:
-? = Untracked file
-+ (yellow) = Staged but not committed
-Green = Synced with repo
 
-Check status:
-==git status==
-==git status -s (short view)==
+    ?? = Untracked file
 
-COMMITTING CHANGES
-------------------
-==git commit==
-==git commit -m "message"==
+    A or M (yellow) = Staged but not committed
 
-Skip staging (not recommended):
-==git commit -am "message"==
+    Green = Synced with repo
 
-FILE OPERATIONS
----------------
-Remove file:
-==rm filename==              (only locally)
-==git rm filename==          (local + staging)
+Bash
 
-Rename/move:
-==git mv old_filename new_filename==
+# Check status
+git status
 
-IGNORING FILES
---------------
+# Check status (short view)
+git status -s
+
+File Operations
+
+###Removing a File
+
+Bash
+
+# Removes file locally AND stages the removal
+git rm filename
+
+###Renaming/Moving a File
+
+Bash
+
+# Renames/moves file locally AND stages the change
+git mv old_filename new_filename
+
+###Ignoring Files
+
 1. Create .gitignore
-2. Add rules (example):
-   /directory_name
-   *.log
-3. Remove from repo:
-==git rm --cached -r /directory_name==
-==git commit -m "ignored files"==
 
-BEST PRACTICES
---------------
-- Commit often
-- Use meaningful commit messages (present tense)
-- Stage changes clearly
-- Mix CLI and GUI as needed
+Create a file named .gitignore in the repository root.
 
-===============================
+2. Add Rules
+
+# Example rules in .gitignore
+/directory_name
+*.log
+
+3. Remove Already Tracked Files
+
+If files were accidentally tracked, remove them from the repository's tracking without deleting the local file:
+Bash
+
+# Remove from repo/staging, but keep the local file
+git rm --cached -r /directory_name
+
+# Commit the change to apply the ignore rule
+git commit -m "Ignored specified files"
+
+###Best Practices
+
+    Commit often
+
+    Use meaningful commit messages (present tense, e.g., "Fix bug X")
+
+    Stage changes clearly
+
+    Mix CLI and GUI as needed
